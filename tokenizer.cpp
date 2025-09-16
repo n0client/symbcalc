@@ -207,6 +207,7 @@ void TokenList::parse(std::string& s) {
   }
   s.pop_back();
 }
+
 void TokenList::rpn() {
   TokenList* out_queue = new TokenList();
   TokenList* op_stack = new TokenList();
@@ -233,21 +234,26 @@ void TokenList::rpn() {
       break;
     case Token::t_r_paren:
       while (op_stack->back()->op != '(') {
-        assert(op_stack->size() != 0); // if fails them mismatched parentheses
+        assert("mismatched parentheses" && op_stack->size() != 0); // if fails them mismatched parentheses
         out_queue->push_back(op_stack->back());
         op_stack->pop_back();
       }
+
       assert(op_stack->back()->op == '(');
+
       op_stack->pop_back();
-      if (op_stack->back()->type == Token::t_fun_bin || op_stack->back()->type == Token::t_fun_un) {
+      if (op_stack->size() && 
+         (op_stack->back()->type == Token::t_fun_bin || op_stack->back()->type == Token::t_fun_un)) {
         out_queue->push_back(op_stack->back());
         op_stack->pop_back();
       }
       break;
     }
   }
+
   while (op_stack->size() > 0) {
-    assert(op_stack->back()->op != '('); // if fails then mismatched parentheses
+    assert("mismatched parentheses" && op_stack->back()->op != '('); // if fails then mismatched parentheses
+
     out_queue->push_back(op_stack->back());
     op_stack->pop_back();
   }

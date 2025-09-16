@@ -28,6 +28,7 @@ Node::Node(const Token* token, Node* lhs, Node* rhs) : left(lhs), right(rhs), vi
     break;
   }
 }
+
 Node::Node(const Node& other) : type(other.type), left(nullptr), right(nullptr), visited(other.visited) {
   std::cout << "Copy constructor\n";
   switch (type) {
@@ -89,13 +90,16 @@ void Node::clean(Node* node) {
   clean(node->right);
   delete node;
 }
+
 Node::~Node() {
   clean(root);
   delete[] container; 
 }
+
 Node::Node(std::string& inp) {
   TokenList tokens = TokenList(inp);
   tokens.rpn();
+
   Node** node_stack = new Node*[tokens.size()/2+1];
   size_t pos {};
   for (size_t i = 0; i < tokens.size(); ++i) {
@@ -135,6 +139,7 @@ Node::Node(std::string& inp) {
   container = node_stack;
   root = node_stack[0];
 }
+
 double Node::eval() {
   if (type == Node::t_num)
     return num;
