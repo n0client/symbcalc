@@ -1,4 +1,5 @@
 #include "node.hpp"
+#include <cassert>
 #include <iostream>
 #include <string>
 #include "tokenizer.hpp"
@@ -137,7 +138,8 @@ Node::Node(std::string& inp) {
 double Node::eval() {
   if (type == Node::t_num)
     return num;
-  else if (type == Node::t_op_bin) {
+  //else if (type == Node::t_op_bin) {
+  else {
     double lhs = left->eval();
     double rhs = right->eval();
     switch (op_bin) {
@@ -149,6 +151,10 @@ double Node::eval() {
       return lhs * rhs;
     case '/':
       return lhs / rhs;
+    case '^':
+      return std::pow(lhs, rhs);
+    default:
+      assert(0);
     }
   }
 /*
@@ -183,6 +189,7 @@ function evaluateIterative(root):
     result = pop from stack
     return result
 */
+  return 0.0;
 }
 void Node::print() {
   switch (type) {
