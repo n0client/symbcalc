@@ -1,4 +1,4 @@
-In progress, symbolic variable calculator.
+Finished, symbolic variable calculator.
 Currently:
-- Finished AST for a simple equation using Shunting Yard Algorithm.
-- Implementing iterative AST solver functions
+- Forms an AST for a expressions using Shunting Yard Algorithm with numbers and + / * - ^ () operands
+- Exit with Ctrl-c
